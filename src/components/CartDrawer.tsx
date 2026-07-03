@@ -129,7 +129,9 @@ export default function CartDrawer() {
                                 </button>
                                 <span className="w-8 text-center text-sm">{line.qty}</span>
                                 <button
-                                  className="px-2.5 py-1 text-sm hover:bg-paper"
+                                  className="px-2.5 py-1 text-sm hover:bg-paper disabled:cursor-not-allowed disabled:text-line disabled:hover:bg-transparent"
+                                  disabled={line.qty >= line.maxQty}
+                                  title={line.qty >= line.maxQty ? "No more stock available" : undefined}
                                   onClick={() => setQty(line, line.qty + 1)}
                                   aria-label="Increase quantity"
                                 >
@@ -155,11 +157,15 @@ export default function CartDrawer() {
                   <span className="text-sm text-muted">Subtotal</span>
                   <span className="text-base font-bold">{formatPKR(subtotal)}</span>
                 </div>
-                <button className="w-full bg-ink py-4 text-xs font-bold uppercase tracking-[0.24em] text-white transition-opacity hover:opacity-85">
+                <Link
+                  href="/checkout"
+                  onClick={closeCart}
+                  className="block w-full bg-ink py-4 text-center text-xs font-bold uppercase tracking-[0.24em] text-white transition-opacity hover:opacity-85"
+                >
                   Checkout
-                </button>
+                </Link>
                 <p className="mt-3 text-center text-[11px] text-muted">
-                  Shipping &amp; taxes calculated at checkout
+                  Cash on delivery · Order confirmed by email
                 </p>
               </div>
             )}

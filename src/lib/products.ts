@@ -1,7 +1,25 @@
 import type { ProductRow } from "@/db/schema";
 
-export type Product = ProductRow;
-export type { ProductColor, BannerRow, AnnouncementRow } from "@/db/schema";
+export type SizeStock = { size: string; stock: number };
+
+// Products are always served with their per-size stock attached.
+export type Product = ProductRow & { sizes: SizeStock[] };
+
+export type {
+  ProductColor,
+  BannerRow,
+  AnnouncementRow,
+  OrderRow,
+  OrderItemRow,
+} from "@/db/schema";
+
+export const totalStock = (p: Pick<Product, "sizes">) =>
+  p.sizes.reduce((sum, s) => sum + s.stock, 0);
+
+export const isSoldOut = (p: Pick<Product, "sizes">) => totalStock(p) === 0;
+
+export const DEFAULT_SHIPPING_FEE = 250;
+export const MAX_QTY_PER_LINE = 10;
 
 export const formatPKR = (n: number) => `PKR ${n.toLocaleString("en-PK")}`;
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { discountPercent, formatPKR, type Product } from "@/lib/products";
+import { discountPercent, formatPKR, isSoldOut, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 
 const ACCORDIONS = (p: Product) => [
@@ -30,9 +30,11 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const pct = discountPercent(product);
   const unit = product.salePrice ?? product.price;
+  const soldOut = isSoldOut(product);
+  const selected = product.sizes.find((s) => s.size === size);
 
   const handleAdd = () => {
-    if (!size) {
+    if (!size || !selected || selected.stock === 0) {
       setSizeError(true);
       return;
     }
@@ -43,6 +45,7 @@ export default function ProductDetail({ product }: { product: Product }) {
       unitPrice: unit,
       size,
       color,
+      maxQty: selected.stock,
     });
   };
 
@@ -160,9 +163,10 @@ export default function ProductDetail({ product }: { product: Product }) {
               </button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {product.sizes.map((s) => (
+              {product.sizes.map(({ size: s, stock }) => (
                 <button
                   key={s}
+                  disabled={stock === 0}
                   onClick={() => {
                     setSize(s);
                     setSizeError(false);
@@ -171,13 +175,26 @@ export default function ProductDetail({ product }: { product: Product }) {
                     size === s
                       ? "border-ink bg-ink text-white"
                       : "border-line hover:border-ink"
-                  }`}
+                  } disabled:cursor-not-allowed disabled:border-line disabled:text-line disabled:line-through disabled:hover:border-line`}
                 >
                   {s}
                 </button>
               ))}
+              {product.sizes.length === 0 && (
+                <p className="text-sm text-muted">No sizes available right now.</p>
+              )}
             </div>
             <AnimatePresence>
+              {selected && selected.stock > 0 && selected.stock <= 5 && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="mt-2 text-xs font-semibold text-sale"
+                >
+                  Only {selected.stock} left in {selected.size}.
+                </motion.p>
+              )}
               {sizeError && (
                 <motion.p
                   initial={{ opacity: 0, y: -4 }}
@@ -185,7 +202,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                   exit={{ opacity: 0 }}
                   className="mt-2 text-xs font-medium text-sale"
                 >
-                  Please select a size first.
+                  Please select an available size first.
                 </motion.p>
               )}
             </AnimatePresence>
@@ -194,9 +211,10 @@ export default function ProductDetail({ product }: { product: Product }) {
           <motion.button
             whileTap={{ scale: 0.98 }}
             onClick={handleAdd}
-            className="mt-8 w-full bg-ink py-4 text-xs font-bold uppercase tracking-[0.28em] text-white transition-opacity hover:opacity-85"
+            disabled={soldOut}
+            className="mt-8 w-full bg-ink py-4 text-xs font-bold uppercase tracking-[0.28em] text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Add to Basket — {formatPKR(unit)}
+            {soldOut ? "Sold Out" : `Add to Basket — ${formatPKR(unit)}`}
           </motion.button>
 
           <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] text-muted">

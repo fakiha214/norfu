@@ -13,21 +13,31 @@ const catalog = JSON.parse(readFileSync(join(root, "src/data/catalog.json"), "ut
 
 const sql = neon(process.env.DATABASE_URL);
 
+const DEFAULT_STOCK = 20;
+
 let inserted = 0;
 for (const [i, p] of catalog.products.entries()) {
   const rows = await sql`
     INSERT INTO products
       (slug, name, category, gender, fit, price, sale_price, badge,
-       description, sizes, colors, image_a, image_b, is_active, sort_order)
+       description, colors, image_a, image_b, is_active, sort_order)
     VALUES
       (${p.slug}, ${p.name}, ${p.category}, ${p.gender}, ${p.fit},
        ${p.price}, ${p.salePrice}, ${p.badge}, ${p.description},
-       ${JSON.stringify(p.sizes)}, ${JSON.stringify(p.colors)},
+       ${JSON.stringify(p.colors)},
        ${`/products/${p.id}-a.svg`}, ${`/products/${p.id}-b.svg`},
        true, ${i})
     ON CONFLICT (slug) DO NOTHING
     RETURNING id`;
   inserted += rows.length;
+  if (rows.length > 0) {
+    for (const [j, size] of p.sizes.entries()) {
+      await sql`
+        INSERT INTO product_sizes (product_id, size, stock, sort_order)
+        VALUES (${rows[0].id}, ${size}, ${DEFAULT_STOCK}, ${j})
+        ON CONFLICT (product_id, size) DO NOTHING`;
+    }
+  }
 }
 console.log(`products: ${inserted} inserted, ${catalog.products.length - inserted} already present`);
 
@@ -94,6 +104,7 @@ if (existing[0].n === 0) {
 
 const settingsRows = [
   ["free_shipping_threshold", "4000"],
+  ["shipping_fee", "250"],
   ["sale_rail_title", "Summer Sale — Up to 50% Off"],
   ["new_rail_title", "New This Week"],
   ["womens_rail_title", "Women's Edit"],
