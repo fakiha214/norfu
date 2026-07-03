@@ -9,36 +9,49 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { bySlug, type Product } from "@/lib/products";
+import { DEFAULT_FREE_SHIPPING_THRESHOLD } from "@/lib/products";
 
+// Cart lines store a snapshot of the product at add time, so the cart
+// renders without a round-trip and survives catalog edits gracefully.
 export type CartLine = {
   slug: string;
+  name: string;
+  image: string;
+  unitPrice: number;
   size: string;
   color: string;
   qty: number;
 };
+
+export type CartLineInput = Omit<CartLine, "qty">;
 
 type CartContextValue = {
   lines: CartLine[];
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addLine: (line: Omit<CartLine, "qty">) => void;
+  addLine: (line: CartLineInput) => void;
   setQty: (line: CartLine, qty: number) => void;
   removeLine: (line: CartLine) => void;
   count: number;
   subtotal: number;
-  productFor: (line: CartLine) => Product | undefined;
+  freeShippingThreshold: number;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-const STORAGE_KEY = "norfu-cart";
+const STORAGE_KEY = "norfu-cart-v2";
 
-const sameLine = (a: CartLine, b: Omit<CartLine, "qty">) =>
+const sameLine = (a: CartLine, b: Pick<CartLine, "slug" | "size" | "color">) =>
   a.slug === b.slug && a.size === b.size && a.color === b.color;
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function CartProvider({
+  children,
+  freeShippingThreshold = DEFAULT_FREE_SHIPPING_THRESHOLD,
+}: {
+  children: ReactNode;
+  freeShippingThreshold?: number;
+}) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -57,7 +70,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
   }, [lines, hydrated]);
 
-  const addLine = useCallback((line: Omit<CartLine, "qty">) => {
+  const addLine = useCallback((line: CartLineInput) => {
     setLines((prev) => {
       const existing = prev.find((l) => sameLine(l, line));
       if (existing) {
@@ -80,13 +93,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLines((prev) => prev.filter((l) => !sameLine(l, line)));
   }, []);
 
-  const value = useMemo<CartContextValue>(() => {
-    const productFor = (line: CartLine) => bySlug(line.slug);
-    const subtotal = lines.reduce((sum, l) => {
-      const p = productFor(l);
-      return sum + (p ? (p.salePrice ?? p.price) * l.qty : 0);
-    }, 0);
-    return {
+  const value = useMemo<CartContextValue>(
+    () => ({
       lines,
       isOpen,
       openCart: () => setIsOpen(true),
@@ -95,10 +103,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setQty,
       removeLine,
       count: lines.reduce((n, l) => n + l.qty, 0),
-      subtotal,
-      productFor,
-    };
-  }, [lines, isOpen, addLine, setQty, removeLine]);
+      subtotal: lines.reduce((sum, l) => sum + l.unitPrice * l.qty, 0),
+      freeShippingThreshold,
+    }),
+    [lines, isOpen, addLine, setQty, removeLine, freeShippingThreshold]
+  );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

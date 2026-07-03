@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { bySlug, products } from "@/lib/products";
+import { getProductBySlug, getRelatedProducts } from "@/lib/queries";
 import ProductDetail from "@/components/ProductDetail";
 import ProductRail from "@/components/ProductRail";
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
-}
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -14,7 +12,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = bySlug(slug);
+  const product = await getProductBySlug(slug);
   return { title: product ? product.name : "Product" };
 }
 
@@ -24,12 +22,10 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = bySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const related = products
-    .filter((p) => p.gender === product.gender && p.id !== product.id)
-    .slice(0, 6);
+  const related = await getRelatedProducts(product);
 
   return (
     <>

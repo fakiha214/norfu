@@ -2,15 +2,18 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { BannerRow } from "@/lib/products";
 
-const words = ["WEAR", "THE", "EVERYDAY"];
+export default function Hero({ banner }: { banner?: BannerRow }) {
+  const image = banner?.imageUrl ?? "/banners/hero-1.svg";
+  const kicker = banner?.kicker || "Summer '26 Collection";
+  const words = (banner?.title || "WEAR THE EVERYDAY").split(" ");
 
-export default function Hero() {
   return (
     <section className="relative h-[78vh] min-h-[520px] overflow-hidden bg-ink text-white">
       <div
         className="animate-kenburns absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(/banners/hero-1.svg)" }}
+        style={{ backgroundImage: `url(${image})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
@@ -21,12 +24,12 @@ export default function Hero() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-white/80"
         >
-          Summer &rsquo;26 Collection
+          {kicker}
         </motion.p>
 
         <h1 className="flex flex-wrap gap-x-5 text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
           {words.map((w, i) => (
-            <span key={w} className="overflow-hidden">
+            <span key={`${w}-${i}`} className="overflow-hidden">
               <motion.span
                 className="inline-block"
                 initial={{ y: "110%" }}
@@ -50,10 +53,10 @@ export default function Hero() {
           className="mt-8 flex flex-wrap gap-4"
         >
           <Link
-            href="/collections/men"
+            href={banner?.href || "/collections/men"}
             className="bg-white px-8 py-4 text-xs font-bold uppercase tracking-[0.24em] text-ink transition-transform hover:-translate-y-0.5"
           >
-            Shop Men
+            {banner?.ctaLabel || "Shop Men"}
           </Link>
           <Link
             href="/collections/women"

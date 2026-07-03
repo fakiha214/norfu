@@ -4,13 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  discountPercent,
-  formatPKR,
-  imageA,
-  imageB,
-  type Product,
-} from "@/lib/products";
+import { discountPercent, formatPKR, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -19,7 +13,14 @@ export default function ProductCard({ product }: { product: Product }) {
   const pct = discountPercent(product);
 
   const quickAdd = (size: string) =>
-    addLine({ slug: product.slug, size, color: product.colors[0].name });
+    addLine({
+      slug: product.slug,
+      name: product.name,
+      image: product.imageA,
+      unitPrice: product.salePrice ?? product.price,
+      size,
+      color: product.colors[0]?.name ?? "Default",
+    });
 
   return (
     <div
@@ -30,7 +31,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <Link href={`/products/${product.slug}`} className="block">
         <div className="relative aspect-[3/4] overflow-hidden bg-paper">
           <Image
-            src={imageA(product)}
+            src={product.imageA}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -39,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
             }`}
           />
           <Image
-            src={imageB(product)}
+            src={product.imageB}
             alt={`${product.name} — alternate view`}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

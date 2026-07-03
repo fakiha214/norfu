@@ -2,9 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { formatPKR, imageA, products } from "@/lib/products";
+import { formatPKR } from "@/lib/products";
+
+type SearchResult = {
+  slug: string;
+  name: string;
+  fit: string;
+  gender: string;
+  price: number;
+  salePrice: number | null;
+  image: string;
+};
 
 export default function SearchOverlay({
   open,
@@ -14,11 +24,14 @@ export default function SearchOverlay({
   onClose: () => void;
 }) {
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (open) {
       setQuery("");
+      setResults([]);
       requestAnimationFrame(() => inputRef.current?.focus());
     }
   }, [open]);
@@ -29,17 +42,32 @@ export default function SearchOverlay({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return products
-      .filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.category.includes(q) ||
-          p.gender.includes(q)
-      )
-      .slice(0, 6);
+  // Debounced live search against the DB
+  useEffect(() => {
+    const q = query.trim();
+    if (!q) {
+      setResults([]);
+      return;
+    }
+    setLoading(true);
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {
+          signal: controller.signal,
+        });
+        const data = await res.json();
+        setResults(data.results ?? []);
+      } catch {
+        // aborted or network error — keep previous results
+      } finally {
+        setLoading(false);
+      }
+    }, 250);
+    return () => {
+      controller.abort();
+      clearTimeout(timer);
+    };
   }, [query]);
 
   return (
@@ -80,23 +108,25 @@ export default function SearchOverlay({
                 </button>
               </div>
 
-              {query && (
+              {query.trim() && (
                 <div className="py-4">
-                  {results.length === 0 ? (
+                  {loading && results.length === 0 ? (
+                    <p className="py-6 text-center text-sm text-muted">Searching…</p>
+                  ) : results.length === 0 ? (
                     <p className="py-6 text-center text-sm text-muted">
                       No results for “{query}”
                     </p>
                   ) : (
                     <ul className="divide-y divide-line">
                       {results.map((p) => (
-                        <li key={p.id}>
+                        <li key={p.slug}>
                           <Link
                             href={`/products/${p.slug}`}
                             onClick={onClose}
                             className="flex items-center gap-4 py-3 hover:bg-paper px-2 -mx-2 transition-colors"
                           >
                             <Image
-                              src={imageA(p)}
+                              src={p.image}
                               alt={p.name}
                               width={48}
                               height={64}

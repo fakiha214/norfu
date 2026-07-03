@@ -4,14 +4,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
-import { FREE_SHIPPING_THRESHOLD, formatPKR, imageA } from "@/lib/products";
+import { formatPKR } from "@/lib/products";
 
 export default function CartDrawer() {
-  const { lines, isOpen, closeCart, setQty, removeLine, subtotal, productFor } =
-    useCart();
+  const {
+    lines,
+    isOpen,
+    closeCart,
+    setQty,
+    removeLine,
+    subtotal,
+    freeShippingThreshold,
+  } = useCart();
 
-  const progress = Math.min(1, subtotal / FREE_SHIPPING_THRESHOLD);
-  const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+  const progress = Math.min(1, subtotal / freeShippingThreshold);
+  const remaining = freeShippingThreshold - subtotal;
 
   return (
     <AnimatePresence>
@@ -76,9 +83,6 @@ export default function CartDrawer() {
                 <ul className="divide-y divide-line">
                   <AnimatePresence initial={false}>
                     {lines.map((line) => {
-                      const p = productFor(line);
-                      if (!p) return null;
-                      const unit = p.salePrice ?? p.price;
                       const key = `${line.slug}-${line.size}-${line.color}`;
                       return (
                         <motion.li
@@ -89,10 +93,10 @@ export default function CartDrawer() {
                           exit={{ opacity: 0, x: 40 }}
                           className="flex gap-4 py-4"
                         >
-                          <Link href={`/products/${p.slug}`} onClick={closeCart}>
+                          <Link href={`/products/${line.slug}`} onClick={closeCart}>
                             <Image
-                              src={imageA(p)}
-                              alt={p.name}
+                              src={line.image}
+                              alt={line.name}
                               width={72}
                               height={96}
                               className="h-24 w-18 object-cover bg-paper"
@@ -100,7 +104,7 @@ export default function CartDrawer() {
                           </Link>
                           <div className="flex flex-1 flex-col">
                             <div className="flex justify-between gap-2">
-                              <p className="text-sm font-medium leading-tight">{p.name}</p>
+                              <p className="text-sm font-medium leading-tight">{line.name}</p>
                               <button
                                 onClick={() => removeLine(line)}
                                 aria-label="Remove item"
@@ -133,7 +137,7 @@ export default function CartDrawer() {
                                 </button>
                               </div>
                               <p className="text-sm font-semibold">
-                                {formatPKR(unit * line.qty)}
+                                {formatPKR(line.unitPrice * line.qty)}
                               </p>
                             </div>
                           </div>

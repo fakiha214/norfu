@@ -4,13 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  discountPercent,
-  formatPKR,
-  imageA,
-  imageB,
-  type Product,
-} from "@/lib/products";
+import { discountPercent, formatPKR, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 
 const ACCORDIONS = (p: Product) => [
@@ -26,9 +20,9 @@ const ACCORDIONS = (p: Product) => [
 ];
 
 export default function ProductDetail({ product }: { product: Product }) {
-  const images = [imageA(product), imageB(product)];
+  const images = [product.imageA, product.imageB];
   const [activeImage, setActiveImage] = useState(0);
-  const [color, setColor] = useState(product.colors[0].name);
+  const [color, setColor] = useState(product.colors[0]?.name ?? "Default");
   const [size, setSize] = useState<string | null>(null);
   const [sizeError, setSizeError] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
@@ -42,7 +36,14 @@ export default function ProductDetail({ product }: { product: Product }) {
       setSizeError(true);
       return;
     }
-    addLine({ slug: product.slug, size, color });
+    addLine({
+      slug: product.slug,
+      name: product.name,
+      image: product.imageA,
+      unitPrice: unit,
+      size,
+      color,
+    });
   };
 
   return (

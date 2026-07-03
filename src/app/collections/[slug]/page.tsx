@@ -1,8 +1,11 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { collectionBySlug, collections, products } from "@/lib/products";
+import { collectionBySlug, collections } from "@/lib/products";
+import { getCollectionProducts } from "@/lib/queries";
 import CollectionView from "@/components/CollectionView";
+
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return collections.map((c) => ({ slug: c.slug }));
@@ -27,7 +30,7 @@ export default async function CollectionPage({
   const collection = collectionBySlug(slug);
   if (!collection) notFound();
 
-  const items = products.filter(collection.filter);
+  const items = await getCollectionProducts(slug);
 
   return (
     <Suspense>
