@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2E2A26"/>
+      <stop offset="1" stop-color="#6B5D4E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.72" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <circle cx="1497.6000000000001" cy="345.6" r="453.59999999999997" fill="none" stroke="#E8DFD2" stroke-width="2" opacity="0.5"/>
+  <circle cx="1497.6000000000001" cy="345.6" r="626.4" fill="none" stroke="#E8DFD2" stroke-width="1.4" opacity="0.35"/>
+  <circle cx="307.2" cy="918" r="540" fill="#E8DFD2" opacity="0.10"/>
+  <text x="960" y="1015.1999999999999" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="35" letter-spacing="10" fill="#ffffff" opacity="0.55">SUMMER 26 CAMPAIGN</text>
+</svg>

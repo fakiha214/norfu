@@ -1,0 +1,437 @@
+{
+  "products": [
+    {
+      "id": "p01",
+      "slug": "heavyweight-boxy-tee-ecru",
+      "name": "Heavyweight Boxy Tee",
+      "category": "t-shirts",
+      "gender": "men",
+      "fit": "Boxy Fit",
+      "price": 2490,
+      "salePrice": 1490,
+      "badge": "sale",
+      "silhouette": "tshirt",
+      "colors": [
+        { "name": "Ecru", "hex": "#D8CFC0" },
+        { "name": "Charcoal", "hex": "#3A3A3A" },
+        { "name": "Sage", "hex": "#A8B5A0" }
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "description": "A 240 GSM heavyweight cotton tee with a boxy drop-shoulder cut. Garment-dyed for a lived-in feel, finished with a ribbed collar that keeps its shape."
+    },
+    {
+      "id": "p02",
+      "slug": "graphic-print-relaxed-tee",
+      "name": "Graphic Print Relaxed Tee",
+      "category": "t-shirts",
+      "gender": "men",
+      "fit": "Relaxed Fit",
+      "price": 2890,
+      "salePrice": 1690,
+      "badge": "sale",
+      "silhouette": "tshirt",
+      "colors": [
+        { "name": "Black", "hex": "#1C1C1C" },
+        { "name": "Dust Blue", "hex": "#8FA8BC" }
+      ],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "description": "Relaxed-fit tee in combed cotton jersey with an oversized back print. Pre-shrunk and enzyme-washed for softness from the first wear."
+    },
+    {
+      "id": "p03",
+      "slug": "textured-knit-polo",
+      "name": "Textured Knit Polo",
+      "category": "polos",
+      "gender": "men",
+      "fit": "Slim Fit",
+      "price": 3490,
+      "salePrice": null,
+      "badge": "new",
+      "silhouette": "polo",
+      "colors": [
+        { "name": "Olive", "hex": "#7A7D5E" },
+        { "name": "Cream", "hex": "#E8E0CE" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Waffle-textured knit polo with a two-button placket and ribbed cuffs. Breathable open-knit structure built for warm evenings."
+    },
+    {
+      "id": "p04",
+      "slug": "pique-zip-polo",
+      "name": "Piqué Zip Polo",
+      "category": "polos",
+      "gender": "men",
+      "fit": "Regular Fit",
+      "price": 3290,
+      "salePrice": 2290,
+      "badge": "sale",
+      "silhouette": "polo",
+      "colors": [
+        { "name": "Navy", "hex": "#2C3A50" },
+        { "name": "Stone", "hex": "#C6BEB0" }
+      ],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "description": "Classic piqué polo updated with a quarter-zip collar and tonal stitching. Mid-weight cotton blend that holds structure all day."
+    },
+    {
+      "id": "p05",
+      "slug": "oxford-overshirt",
+      "name": "Oxford Overshirt",
+      "category": "shirts",
+      "gender": "men",
+      "fit": "Relaxed Fit",
+      "price": 4490,
+      "salePrice": 2990,
+      "badge": "sale",
+      "silhouette": "shirt",
+      "colors": [
+        { "name": "Sand", "hex": "#CBB894" },
+        { "name": "Slate", "hex": "#6B7280" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Brushed oxford overshirt with twin chest pockets and corozo buttons. Wear it open as a light layer or buttoned as a shirt."
+    },
+    {
+      "id": "p06",
+      "slug": "striped-resort-shirt",
+      "name": "Striped Resort Shirt",
+      "category": "shirts",
+      "gender": "men",
+      "fit": "Relaxed Fit",
+      "price": 3990,
+      "salePrice": null,
+      "badge": "new",
+      "silhouette": "shirt",
+      "colors": [
+        { "name": "Terracotta", "hex": "#C3714F" },
+        { "name": "Ecru", "hex": "#D8CFC0" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Camp-collar resort shirt in a crinkled viscose blend with woven vertical stripes. Cut loose with a straight hem for an easy drape."
+    },
+    {
+      "id": "p07",
+      "slug": "vintage-wash-straight-jeans",
+      "name": "Vintage Wash Straight Jeans",
+      "category": "jeans",
+      "gender": "men",
+      "fit": "Straight Fit",
+      "price": 5490,
+      "salePrice": 3790,
+      "badge": "sale",
+      "silhouette": "jeans",
+      "colors": [
+        { "name": "Mid Indigo", "hex": "#5A6E8C" },
+        { "name": "Washed Black", "hex": "#3D3D42" }
+      ],
+      "sizes": ["28", "30", "32", "34", "36"],
+      "description": "Rigid 13 oz denim with a stone-washed finish and subtle whiskering. Straight through the leg with a mid rise that sits naturally."
+    },
+    {
+      "id": "p08",
+      "slug": "carpenter-cargo-shorts",
+      "name": "Carpenter Cargo Shorts",
+      "category": "shorts",
+      "gender": "men",
+      "fit": "Loose Fit",
+      "price": 3290,
+      "salePrice": 1990,
+      "badge": "sale",
+      "silhouette": "shorts",
+      "colors": [
+        { "name": "Khaki", "hex": "#A08F6F" },
+        { "name": "Charcoal", "hex": "#3A3A3A" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Utility shorts in washed cotton twill with a hammer loop and angled cargo pockets. Sits below the knee with a roomy leg."
+    },
+    {
+      "id": "p09",
+      "slug": "everyday-swim-shorts",
+      "name": "Everyday Swim Shorts",
+      "category": "shorts",
+      "gender": "men",
+      "fit": "Regular Fit",
+      "price": 2690,
+      "salePrice": null,
+      "badge": "new",
+      "silhouette": "shorts",
+      "colors": [
+        { "name": "Dust Blue", "hex": "#8FA8BC" },
+        { "name": "Black", "hex": "#1C1C1C" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Quick-dry swim shorts with a mesh liner, elastic drawcord waist and a zipped back pocket. From pool to street without a change."
+    },
+    {
+      "id": "p10",
+      "slug": "raglan-crew-sweatshirt",
+      "name": "Raglan Crew Sweatshirt",
+      "category": "sweatshirts",
+      "gender": "men",
+      "fit": "Oversized Fit",
+      "price": 4290,
+      "salePrice": 2590,
+      "badge": "sale",
+      "silhouette": "hoodie",
+      "colors": [
+        { "name": "Heather Grey", "hex": "#B9B9B6" },
+        { "name": "Forest", "hex": "#4C5B4A" }
+      ],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "description": "Loopback fleece crewneck with raglan sleeves and a v-stitch collar detail. Brushed inside for warmth without the bulk."
+    },
+    {
+      "id": "p11",
+      "slug": "zip-through-hoodie",
+      "name": "Zip-Through Hoodie",
+      "category": "sweatshirts",
+      "gender": "men",
+      "fit": "Regular Fit",
+      "price": 4690,
+      "salePrice": null,
+      "badge": null,
+      "silhouette": "hoodie",
+      "colors": [
+        { "name": "Black", "hex": "#1C1C1C" },
+        { "name": "Mauve", "hex": "#9C8AA5" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Mid-weight zip hoodie with a double-layer hood, kangaroo pockets and ribbed side panels for an easy range of motion."
+    },
+    {
+      "id": "p12",
+      "slug": "coach-jacket-nylon",
+      "name": "Nylon Coach Jacket",
+      "category": "outerwear",
+      "gender": "men",
+      "fit": "Regular Fit",
+      "price": 5990,
+      "salePrice": 3990,
+      "badge": "sale",
+      "silhouette": "jacket",
+      "colors": [
+        { "name": "Ink", "hex": "#23262E" },
+        { "name": "Olive", "hex": "#7A7D5E" }
+      ],
+      "sizes": ["S", "M", "L", "XL"],
+      "description": "Water-repellent nylon coach jacket with snap-button front, jersey lining and an embroidered chest mark."
+    },
+    {
+      "id": "p13",
+      "slug": "ribbed-fitted-tee",
+      "name": "Ribbed Fitted Tee",
+      "category": "t-shirts",
+      "gender": "women",
+      "fit": "Fitted",
+      "price": 1990,
+      "salePrice": 1190,
+      "badge": "sale",
+      "silhouette": "tshirt",
+      "colors": [
+        { "name": "White", "hex": "#EFEDE8" },
+        { "name": "Cocoa", "hex": "#8A6F5C" },
+        { "name": "Black", "hex": "#1C1C1C" }
+      ],
+      "sizes": ["XS", "S", "M", "L"],
+      "description": "Second-skin ribbed tee in stretch cotton with a scooped neckline. A layering staple that keeps its shape wash after wash."
+    },
+    {
+      "id": "p14",
+      "slug": "oversized-boyfriend-tee",
+      "name": "Oversized Boyfriend Tee",
+      "category": "t-shirts",
+      "gender": "women",
+      "fit": "Oversized Fit",
+      "price": 2490,
+      "salePrice": null,
+      "badge": "new",
+      "silhouette": "tshirt",
+      "colors": [
+        { "name": "Butter", "hex": "#E6D9A8" },
+        { "name": "Ash", "hex": "#B5AFA6" }
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "description": "Borrowed-from-him silhouette in slubbed cotton with dropped shoulders and a curved hem. Throw-on-and-go ease."
+    },
+    {
+      "id": "p15",
+      "slug": "poplin-midi-dress",
+      "name": "Poplin Midi Dress",
+      "category": "dresses",
+      "gender": "women",
+      "fit": "A-Line",
+      "price": 4990,
+      "salePrice": 3290,
+      "badge": "sale",
+      "silhouette": "dress",
+      "colors": [
+        { "name": "Ecru", "hex": "#D8CFC0" },
+        { "name": "Terracotta", "hex": "#C3714F" }
+      ],
+      "sizes": ["XS", "S", "M", "L"],
+      "description": "Crisp cotton poplin midi with a square neckline, smocked back panel and side seam pockets. Holds its shape beautifully."
+    },
+    {
+      "id": "p16",
+      "slug": "satin-slip-dress",
+      "name": "Satin Slip Dress",
+      "category": "dresses",
+      "gender": "women",
+      "fit": "Bias Cut",
+      "price": 5490,
+      "salePrice": null,
+      "badge": "new",
+      "silhouette": "dress",
+      "colors": [
+        { "name": "Champagne", "hex": "#D9C3A5" },
+        { "name": "Ink", "hex": "#23262E" }
+      ],
+      "sizes": ["XS", "S", "M", "L"],
+      "description": "Bias-cut satin slip with adjustable straps and a cowl neckline. Fluid drape that moves with you, day to night."
+    },
+    {
+      "id": "p17",
+      "slug": "linen-wrap-dress",
+      "name": "Linen Wrap Dress",
+      "category": "dresses",
+      "gender": "women",
+      "fit": "Wrap Fit",
+      "price": 5290,
+      "salePrice": 3490,
+      "badge": "sale",
+      "silhouette": "dress",
+      "colors": [
+        { "name": "Sage", "hex": "#A8B5A0" },
+        { "name": "Sand", "hex": "#CBB894" }
+      ],
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "description": "Breathable linen-blend wrap dress with a self-tie waist and fluttered short sleeves. Made for long summer afternoons."
+    },
+    {
+      "id": "p18",
+      "slug": "cropped-cotton-shirt",
+      "name": "Cropped Cotton Shirt",
+      "category": "shirts",
+      "gender": "women",
+      "fit": "Cropped Fit",
+      "price": 3290,
+      "salePrice": 2190,
+      "badge": "sale",
+      "silhouette": "shirt",
+      "colors": [
+        { "name": "White", "hex": "#EFEDE8" },
+        { "name": "Dust Blue", "hex": "#8FA8BC" }
+      ],
+      "sizes": ["XS", "S", "M", "L"],
+      "description": "Boxy cropped shirt in mid-weight cotton with a spread collar and single chest pocket. Pairs with everything high-waisted."
+    },
+    {
+      "id": "p19",
+      "slug": "wide-leg-jeans",
+      "name": "Wide Leg Jeans",
+      "category": "jeans",
+      "gender": "women",
+      "fit": "Wide Leg",
+      "price": 5290,
+      "salePrice": 3490,
+      "badge": "sale",
+      "silhouette": "jeans",
+      "colors": [
+        { "name": "Light Wash", "hex": "#9DB2C4" },
+        { "name": "Ecru", "hex": "#D8CFC0" }
+      ],
+      "sizes": ["24", "26", "28", "30", "32"],
+      "description": "High-rise jeans with a sweeping wide leg and full-length inseam. Non-stretch denim that breaks in like a favourite."
+    },
+    {
+      "id": "p20",
+      "slug": "cropped-zip-sweatshirt",
+      "name": "Cropped Zip Sweatshirt",
+      "category": "sweatshirts",
+      "gender": "women",
+      "fit": "Cropped Fit",
+      "price": 3790,
+      "salePrice": null,
+      "badge": "new",
+      "silhouette": "hoodie",
+      "colors": [
+        { "name": "Blush", "hex": "#D9B8B4" },
+        { "name": "Charcoal", "hex": "#3A3A3A" }
+      ],
+      "sizes": ["XS", "S", "M", "L"],
+      "description": "Cropped fleece zip-up with a raised collar and ribbed hem. Brushed-back interior with a structured, sporty shape."
+    },
+    {
+      "id": "p21",
+      "slug": "everyday-graphic-tee-kids",
+      "name": "Everyday Graphic Tee",
+      "category": "t-shirts",
+      "gender": "juniors",
+      "fit": "Regular Fit",
+      "price": 1490,
+      "salePrice": 990,
+      "badge": "sale",
+      "silhouette": "tshirt",
+      "colors": [
+        { "name": "Sun Yellow", "hex": "#E5C55B" },
+        { "name": "Dust Blue", "hex": "#8FA8BC" }
+      ],
+      "sizes": ["6-7Y", "8-9Y", "10-11Y", "12-13Y"],
+      "description": "Soft combed-cotton tee with a playful front print. Reinforced shoulder seams to survive every adventure and every wash."
+    },
+    {
+      "id": "p22",
+      "slug": "pull-on-jogger-kids",
+      "name": "Pull-On Joggers",
+      "category": "trousers",
+      "gender": "juniors",
+      "fit": "Regular Fit",
+      "price": 1990,
+      "salePrice": null,
+      "badge": null,
+      "silhouette": "jeans",
+      "colors": [
+        { "name": "Heather Grey", "hex": "#B9B9B6" },
+        { "name": "Navy", "hex": "#2C3A50" }
+      ],
+      "sizes": ["6-7Y", "8-9Y", "10-11Y", "12-13Y"],
+      "description": "Everyday fleece joggers with an easy elastic waist, cuffed ankles and deep pockets for important treasures."
+    },
+    {
+      "id": "p23",
+      "slug": "denim-dungaree-dress-kids",
+      "name": "Denim Dungaree Dress",
+      "category": "dresses",
+      "gender": "juniors",
+      "fit": "Regular Fit",
+      "price": 2490,
+      "salePrice": 1690,
+      "badge": "sale",
+      "silhouette": "dress",
+      "colors": [
+        { "name": "Mid Indigo", "hex": "#5A6E8C" }
+      ],
+      "sizes": ["6-7Y", "8-9Y", "10-11Y", "12-13Y"],
+      "description": "Soft-washed denim dungaree dress with adjustable straps and a front patch pocket. Built for twirling."
+    },
+    {
+      "id": "p24",
+      "slug": "zip-hoodie-kids",
+      "name": "Cosy Zip Hoodie",
+      "category": "sweatshirts",
+      "gender": "juniors",
+      "fit": "Regular Fit",
+      "price": 2290,
+      "salePrice": 1590,
+      "badge": "sale",
+      "silhouette": "hoodie",
+      "colors": [
+        { "name": "Forest", "hex": "#4C5B4A" },
+        { "name": "Blush", "hex": "#D9B8B4" }
+      ],
+      "sizes": ["6-7Y", "8-9Y", "10-11Y", "12-13Y"],
+      "description": "Brushed fleece hoodie with a full zip, lined hood and ribbed cuffs. The one they will refuse to take off."
+    }
+  ]
+}

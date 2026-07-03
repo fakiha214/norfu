@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EFEAE2"/>
+      <stop offset="1" stop-color="#e5e0d8"/>
+    </linearGradient>
+    <linearGradient id="garment" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#31343c"/>
+      <stop offset="1" stop-color="#070a12"/>
+    </linearGradient>
+    <pattern id="weave" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="14" height="14" fill="none"/>
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#41444c" stroke-width="1" opacity="0.35"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <ellipse cx="450" cy="1010" rx="300" ry="46" fill="#d5d0c8" opacity="0.5"/>
+  <g transform="translate(30 180) scale(4.2)">
+    <path d="M60 40 L92 26 L100 44 L108 26 L140 40 L170 78 L144 98 L138 76 L140 178 L104 178 L100 60 L96 178 L60 178 L62 76 L56 98 L30 78 Z" fill="url(#garment)" stroke="#070a12" stroke-width="1.4" stroke-linejoin="round" fill-rule="evenodd"/>
+    
+  </g>
+  <text x="450" y="1148" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="12" fill="#9a948a">NORFU STUDIO</text>
+</svg>
