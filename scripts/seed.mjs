@@ -90,7 +90,7 @@ const announcements = [
   "SUMMER SALE — UP TO 50% OFF",
   "FREE SHIPPING ON ORDERS ABOVE PKR 4,000",
   "NEW DROP EVERY FRIDAY",
-  "EASY 14-DAY EXCHANGES NATIONWIDE",
+  "EASY 7-DAY RETURNS NATIONWIDE",
 ];
 const existing = await sql`SELECT count(*)::int AS n FROM announcements`;
 if (existing[0].n === 0) {

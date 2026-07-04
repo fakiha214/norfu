@@ -44,15 +44,14 @@ export default function Footer() {
               honest prices, new drops every Friday.
             </p>
             <div className="mt-6 flex gap-4">
-              {["Instagram", "Facebook", "TikTok", "YouTube"].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  className="text-xs font-semibold uppercase tracking-wider text-muted transition-colors hover:text-ink"
-                >
-                  {s}
-                </a>
-              ))}
+              <a
+                href="https://www.instagram.com/norfuclothing"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-semibold uppercase tracking-wider text-muted transition-colors hover:text-ink"
+              >
+                Instagram
+              </a>
             </div>
           </div>
           {COLUMNS.map((col) => (

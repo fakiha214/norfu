@@ -15,7 +15,7 @@ const ACCORDIONS = (p: Product) => [
   },
   {
     title: "Shipping & Returns",
-    body: "Free shipping on orders above PKR 4,000. Delivered nationwide in 2–4 working days. Easy 14-day exchanges at any Norfu store or by courier.",
+    body: "Free shipping on orders above PKR 4,000. Delivered nationwide in 5–7 working days. Easy 7-day returns at any Norfu store or by courier.",
   },
 ];
 
@@ -125,10 +125,6 @@ export default function ProductDetail({ product }: { product: Product }) {
               </span>
             )}
           </div>
-          <p className="mt-1.5 text-xs text-muted">
-            Or 3 installments of {formatPKR(Math.ceil(unit / 3))} — 0% markup
-          </p>
-
           {/* Colors */}
           <div className="mt-8">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em]">
@@ -219,7 +215,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] text-muted">
             <div className="border border-line px-2 py-3">Nationwide Delivery</div>
-            <div className="border border-line px-2 py-3">14-Day Exchange</div>
+            <div className="border border-line px-2 py-3">7-Day Returns</div>
             <div className="border border-line px-2 py-3">Cash on Delivery</div>
           </div>
 
