@@ -10,7 +10,7 @@ type SearchResult = {
   slug: string;
   name: string;
   fit: string;
-  gender: string;
+  category: string;
   price: number;
   salePrice: number | null;
   image: string;
@@ -135,7 +135,7 @@ export default function SearchOverlay({
                             <div className="flex-1">
                               <p className="text-sm font-medium">{p.name}</p>
                               <p className="text-xs uppercase tracking-wider text-muted">
-                                {p.fit} | {p.gender}
+                                {p.category ? `${p.fit} | ${p.category}` : p.fit}
                               </p>
                             </div>
                             <p className="text-sm font-semibold">

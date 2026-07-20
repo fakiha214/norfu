@@ -53,16 +53,16 @@ export default function Hero({ banner }: { banner?: BannerRow }) {
           className="mt-8 flex flex-wrap gap-4"
         >
           <Link
-            href={banner?.href || "/collections/men"}
+            href={banner?.href || "/collections/new-in"}
             className="bg-white px-8 py-4 text-xs font-bold uppercase tracking-[0.24em] text-ink transition-transform hover:-translate-y-0.5"
           >
-            {banner?.ctaLabel || "Shop Men"}
+            {banner?.ctaLabel || "Shop New In"}
           </Link>
           <Link
-            href="/collections/women"
+            href="/collections/sale"
             className="border border-white/70 px-8 py-4 text-xs font-bold uppercase tracking-[0.24em] text-white backdrop-blur transition-colors hover:bg-white hover:text-ink"
           >
-            Shop Women
+            Shop Sale
           </Link>
         </motion.div>
       </div>

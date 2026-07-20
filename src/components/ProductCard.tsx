@@ -109,7 +109,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
           <h3 className="mt-2 text-sm font-medium leading-snug">{product.name}</h3>
           <p className="mt-0.5 text-xs uppercase tracking-wider text-muted">
-            {product.fit} | {product.gender}
+            {product.category ? `${product.fit} | ${product.category.name}` : product.fit}
           </p>
           <div className="mt-1.5 flex items-baseline gap-2">
             {product.salePrice ? (

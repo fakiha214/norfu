@@ -54,10 +54,17 @@ export default function ProductDetail({ product }: { product: Product }) {
       <p className="mb-6 text-[11px] font-bold uppercase tracking-[0.25em] text-muted">
         <Link href="/" className="hover:text-ink">Home</Link>
         {" / "}
-        <Link href={`/collections/${product.gender}`} className="capitalize hover:text-ink">
-          {product.gender}
-        </Link>
-        {" / "}
+        {product.category && (
+          <>
+            <Link
+              href={`/collections/${product.category.slug}`}
+              className="hover:text-ink"
+            >
+              {product.category.name}
+            </Link>
+            {" / "}
+          </>
+        )}
         <span className="text-ink">{product.name}</span>
       </p>
 
@@ -109,7 +116,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         {/* Info */}
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-muted">
-            {product.fit} | {product.gender}
+            {product.category ? `${product.fit} | ${product.category.name}` : product.fit}
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
             {product.name}

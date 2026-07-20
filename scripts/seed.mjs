@@ -15,14 +15,47 @@ const sql = neon(process.env.DATABASE_URL);
 
 const DEFAULT_STOCK = 20;
 
+const titleCase = (s) =>
+  s
+    .split("-")
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+
+// Distinct categories from the catalog become top-level categories. (The shop
+// is men/unisex only — there is no gender axis; sub-categories can be arranged
+// afterwards in the admin panel.) A few get a placeholder tile image so the
+// homepage category tiles render out of the box.
+const TILE_IMAGES = [
+  "/banners/cat-men.svg",
+  "/banners/cat-women.svg",
+  "/banners/cat-juniors.svg",
+  "/banners/cat-sale.svg",
+];
+const categorySlugs = [...new Set(catalog.products.map((p) => p.category))];
+
+let categoryCount = 0;
+for (const [i, slug] of categorySlugs.entries()) {
+  const rows = await sql`
+    INSERT INTO categories (slug, name, parent_id, image_url, sort_order, is_active)
+    VALUES (${slug}, ${titleCase(slug)}, NULL, ${TILE_IMAGES[i] ?? ""}, ${i}, true)
+    ON CONFLICT (slug) DO NOTHING
+    RETURNING id`;
+  categoryCount += rows.length;
+}
+const catRows = await sql`SELECT id, slug FROM categories`;
+const categoryIdBySlug = Object.fromEntries(catRows.map((c) => [c.slug, c.id]));
+console.log(`categories: ${categoryCount} inserted, ${categorySlugs.length - categoryCount} already present`);
+
 let inserted = 0;
 for (const [i, p] of catalog.products.entries()) {
+  const categoryId = categoryIdBySlug[p.category] ?? null;
   const rows = await sql`
     INSERT INTO products
-      (slug, name, category, gender, fit, price, sale_price, badge,
+      (slug, name, category_id, fit, price, sale_price, badge,
        description, colors, image_a, image_b, is_active, sort_order)
     VALUES
-      (${p.slug}, ${p.name}, ${p.category}, ${p.gender}, ${p.fit},
+      (${p.slug}, ${p.name}, ${categoryId}, ${p.fit},
        ${p.price}, ${p.salePrice}, ${p.badge}, ${p.description},
        ${JSON.stringify(p.colors)},
        ${`/products/${p.id}-a.svg`}, ${`/products/${p.id}-b.svg`},
@@ -38,6 +71,9 @@ for (const [i, p] of catalog.products.entries()) {
         ON CONFLICT (product_id, size) DO NOTHING`;
     }
   }
+  // Idempotently link (or re-link) the product to its category by slug, so
+  // re-seeding after the migration also files pre-existing rows.
+  await sql`UPDATE products SET category_id = ${categoryId} WHERE slug = ${p.slug}`;
 }
 console.log(`products: ${inserted} inserted, ${catalog.products.length - inserted} already present`);
 
@@ -47,8 +83,8 @@ const banners = [
     kicker: "Summer '26 Collection",
     title: "WEAR THE EVERYDAY",
     copy: "",
-    ctaLabel: "Shop Men",
-    href: "/collections/men",
+    ctaLabel: "Shop New In",
+    href: "/collections/new-in",
     imageUrl: "/banners/hero-1.svg",
   },
   {
@@ -57,7 +93,7 @@ const banners = [
     title: "Linen, All Summer",
     copy: "Breathable weaves cut loose for 40° afternoons.",
     ctaLabel: "Shop Now",
-    href: "/collections/women",
+    href: "/collections/new-in",
     imageUrl: "/banners/promo-1.svg",
   },
   {
@@ -66,13 +102,9 @@ const banners = [
     title: "Washed To Order",
     copy: "Rigid denim, stone-washed and broken in for you.",
     ctaLabel: "Shop Now",
-    href: "/collections/men?category=jeans",
+    href: "/collections/sale",
     imageUrl: "/banners/promo-2.svg",
   },
-  { slot: "cat-men", title: "Men", href: "/collections/men", imageUrl: "/banners/cat-men.svg" },
-  { slot: "cat-women", title: "Women", href: "/collections/women", imageUrl: "/banners/cat-women.svg" },
-  { slot: "cat-juniors", title: "Juniors", href: "/collections/juniors", imageUrl: "/banners/cat-juniors.svg" },
-  { slot: "cat-sale", title: "Sale", href: "/collections/sale", imageUrl: "/banners/cat-sale.svg" },
 ];
 
 let bannerCount = 0;
@@ -107,7 +139,7 @@ const settingsRows = [
   ["shipping_fee", "250"],
   ["sale_rail_title", "Summer Sale — Up to 50% Off"],
   ["new_rail_title", "New This Week"],
-  ["womens_rail_title", "Women's Edit"],
+  ["featured_rail_title", "Best of Norfu"],
 ];
 for (const [key, value] of settingsRows) {
   await sql`INSERT INTO settings (key, value) VALUES (${key}, ${value}) ON CONFLICT (key) DO NOTHING`;

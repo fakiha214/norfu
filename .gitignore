@@ -34,6 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# session handoff notes (local only)
+/new_convo
+
 # vercel
 .vercel
 

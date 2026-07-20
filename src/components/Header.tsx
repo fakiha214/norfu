@@ -7,70 +7,52 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import SearchOverlay from "@/components/SearchOverlay";
 
+export type NavCategory = {
+  slug: string;
+  name: string;
+  children: { slug: string; name: string }[];
+};
+
 type MegaColumn = { heading: string; links: { label: string; href: string }[] };
 type NavItem = { label: string; href: string; columns?: MegaColumn[]; accent?: boolean };
 
-const shopLinks = (gender: string, cats: string[]): MegaColumn => ({
-  heading: "Shop",
-  links: cats.map((c) => ({
-    label: c
-      .split("-")
-      .map((w) => w[0].toUpperCase() + w.slice(1))
-      .join(" "),
-    href: `/collections/${gender}?category=${c}`,
-  })),
-});
+function buildNav(categories: NavCategory[]): NavItem[] {
+  const categoryItems: NavItem[] = categories.map((cat) => {
+    const item: NavItem = {
+      label: cat.name,
+      href: `/collections/${cat.slug}`,
+    };
+    if (cat.children.length > 0) {
+      item.columns = [
+        {
+          heading: "Shop",
+          links: cat.children.map((c) => ({
+            label: c.name,
+            href: `/collections/${c.slug}`,
+          })),
+        },
+        {
+          heading: "Featured",
+          links: [
+            { label: "New In", href: "/collections/new-in" },
+            { label: "Summer Sale", href: "/collections/sale" },
+            { label: `View All ${cat.name}`, href: `/collections/${cat.slug}` },
+          ],
+        },
+      ];
+    }
+    return item;
+  });
 
-const NAV: NavItem[] = [
-  {
-    label: "Men",
-    href: "/collections/men",
-    columns: [
-      shopLinks("men", ["t-shirts", "polos", "shirts", "jeans", "shorts", "sweatshirts", "outerwear"]),
-      {
-        heading: "Featured",
-        links: [
-          { label: "New In", href: "/collections/new-in" },
-          { label: "Summer Sale", href: "/collections/sale" },
-          { label: "View All Men", href: "/collections/men" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Women",
-    href: "/collections/women",
-    columns: [
-      shopLinks("women", ["dresses", "t-shirts", "shirts", "jeans", "sweatshirts"]),
-      {
-        heading: "Featured",
-        links: [
-          { label: "New In", href: "/collections/new-in" },
-          { label: "Summer Sale", href: "/collections/sale" },
-          { label: "View All Women", href: "/collections/women" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Juniors",
-    href: "/collections/juniors",
-    columns: [
-      shopLinks("juniors", ["t-shirts", "trousers", "dresses", "sweatshirts"]),
-      {
-        heading: "Featured",
-        links: [
-          { label: "Summer Sale", href: "/collections/sale" },
-          { label: "View All Juniors", href: "/collections/juniors" },
-        ],
-      },
-    ],
-  },
-  { label: "New In", href: "/collections/new-in" },
-  { label: "Sale", href: "/collections/sale", accent: true },
-];
+  return [
+    ...categoryItems,
+    { label: "New In", href: "/collections/new-in" },
+    { label: "Sale", href: "/collections/sale", accent: true },
+  ];
+}
 
-export default function Header() {
+export default function Header({ categories = [] }: { categories?: NavCategory[] }) {
+  const NAV = buildNav(categories);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);

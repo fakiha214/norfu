@@ -16,35 +16,37 @@ const SORTS: { key: SortKey; label: string }[] = [
 ];
 
 const effectivePrice = (p: Product) => p.salePrice ?? p.price;
-const titleCase = (s: string) =>
-  s.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+
+type Subcategory = { slug: string; name: string };
 
 export default function CollectionView({
   title,
   tagline,
   products,
+  subcategories,
 }: {
   title: string;
   tagline: string;
   products: Product[];
+  subcategories: Subcategory[];
 }) {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
 
-  const categories = useMemo(
-    () => [...new Set(products.map((p) => p.category))].sort(),
-    [products]
+  const subSlugs = useMemo(
+    () => new Set(subcategories.map((s) => s.slug)),
+    [subcategories]
   );
 
   const [category, setCategory] = useState<string | null>(
-    initialCategory && categories.includes(initialCategory) ? initialCategory : null
+    initialCategory && subSlugs.has(initialCategory) ? initialCategory : null
   );
   const [sort, setSort] = useState<SortKey>("featured");
   const [saleOnly, setSaleOnly] = useState(false);
 
   const visible = useMemo(() => {
     let list = products;
-    if (category) list = list.filter((p) => p.category === category);
+    if (category) list = list.filter((p) => p.category?.slug === category);
     if (saleOnly) list = list.filter((p) => p.salePrice !== null);
     switch (sort) {
       case "price-asc":
@@ -89,17 +91,17 @@ export default function CollectionView({
             >
               All
             </button>
-            {categories.map((c) => (
+            {subcategories.map((c) => (
               <button
-                key={c}
-                onClick={() => setCategory(category === c ? null : c)}
+                key={c.slug}
+                onClick={() => setCategory(category === c.slug ? null : c.slug)}
                 className={`whitespace-nowrap border px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors ${
-                  category === c
+                  category === c.slug
                     ? "border-ink bg-ink text-white"
                     : "border-line hover:border-ink"
                 }`}
               >
-                {titleCase(c)}
+                {c.name}
               </button>
             ))}
             <button

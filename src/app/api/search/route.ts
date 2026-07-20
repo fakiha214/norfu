@@ -12,7 +12,7 @@ export async function GET(request: Request) {
       slug: p.slug,
       name: p.name,
       fit: p.fit,
-      gender: p.gender,
+      category: p.category?.name ?? "",
       price: p.price,
       salePrice: p.salePrice,
       image: p.imageA,

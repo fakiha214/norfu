@@ -5,8 +5,9 @@ import PromoSplit from "@/components/PromoSplit";
 import Newsletter from "@/components/Newsletter";
 import {
   getBannerMap,
+  getCategoryTiles,
+  getFeaturedProducts,
   getNewProducts,
-  getProductsByGender,
   getSaleProducts,
   getSettings,
 } from "@/lib/queries";
@@ -14,10 +15,11 @@ import {
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [onSale, newIn, women, bannerMap, settings] = await Promise.all([
+  const [onSale, newIn, featured, tiles, bannerMap, settings] = await Promise.all([
     getSaleProducts(8),
     getNewProducts(8),
-    getProductsByGender("women", 8),
+    getFeaturedProducts(8),
+    getCategoryTiles(4),
     getBannerMap(),
     getSettings(),
   ]);
@@ -25,7 +27,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero banner={bannerMap["hero-1"]} />
-      <CategoryTiles bannerMap={bannerMap} />
+      <CategoryTiles categories={tiles} />
       <ProductRail
         title={settings.sale_rail_title || "Summer Sale"}
         href="/collections/sale"
@@ -38,9 +40,9 @@ export default async function HomePage() {
         products={newIn}
       />
       <ProductRail
-        title={settings.womens_rail_title || "Women's Edit"}
-        href="/collections/women"
-        products={women}
+        title={settings.featured_rail_title || "Best of Norfu"}
+        href="/collections/new-in"
+        products={featured}
       />
       <Newsletter />
     </>

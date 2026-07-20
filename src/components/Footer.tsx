@@ -1,16 +1,7 @@
 import Link from "next/link";
+import { getNavCategories } from "@/lib/queries";
 
-const COLUMNS = [
-  {
-    heading: "Shop",
-    links: [
-      { label: "Men", href: "/collections/men" },
-      { label: "Women", href: "/collections/women" },
-      { label: "Juniors", href: "/collections/juniors" },
-      { label: "New In", href: "/collections/new-in" },
-      { label: "Sale", href: "/collections/sale" },
-    ],
-  },
+const STATIC_COLUMNS = [
   {
     heading: "Help",
     links: [
@@ -32,7 +23,21 @@ const COLUMNS = [
   },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const navCategories = await getNavCategories();
+  const shopColumn = {
+    heading: "Shop",
+    links: [
+      ...navCategories.map((c) => ({
+        label: c.name,
+        href: `/collections/${c.slug}`,
+      })),
+      { label: "New In", href: "/collections/new-in" },
+      { label: "Sale", href: "/collections/sale" },
+    ],
+  };
+  const COLUMNS = [shopColumn, ...STATIC_COLUMNS];
+
   return (
     <footer className="border-t border-line bg-paper">
       <div className="mx-auto max-w-7xl px-6 py-14">

@@ -32,7 +32,11 @@ export default async function ProductPage({
       <ProductDetail product={product} />
       <ProductRail
         title="You May Also Like"
-        href={`/collections/${product.gender}`}
+        href={
+          product.category
+            ? `/collections/${product.category.slug}`
+            : "/collections/new-in"
+        }
         products={related}
       />
     </>

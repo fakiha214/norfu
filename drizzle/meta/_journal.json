@@ -15,6 +15,20 @@
       "when": 1783121190685,
       "tag": "0001_glossy_chameleon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784571865872,
+      "tag": "0002_add_categories",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1784571881218,
+      "tag": "0003_drop_gender_category",
+      "breakpoints": true
     }
   ]
 }
